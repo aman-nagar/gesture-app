@@ -1,15 +1,20 @@
-import React, {useState} from 'react';
-import {Alert} from 'react-native';
-import {TapGestureHandler} from 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import { TapGestureHandler } from 'react-native-gesture-handler';
 
-const DoubleTapGesture = ({children}) => {
+const DoubleTapGesture = ({ children, onDoubleTap }) => {
   const [lastTap, setLastTap] = useState(0);
 
   const handleDoubleTap = () => {
     const currentTime = Date.now();
+    console.log('Handling double tap...');  // Log to check if double tap is detected
+
     if (currentTime - lastTap <= 300) {
-      Alert.alert('Double-tapped!'); // Alert on double tap
+      console.log('Double tap detected!');
+      onDoubleTap(); // Trigger the onDoubleTap function passed from the parent
+    } else {
+      console.log('Not a double tap, resetting timer.');
     }
+    
     setLastTap(currentTime);
   };
 
